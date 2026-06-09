@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.brownbot.inbox-signal-daemon</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/brownbot &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node --import /Users/YOUR_USERNAME/Documents/GitHub/brownbot/node_modules/tsx/dist/loader.mjs scripts/inbox-signal-daemon.ts</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/brownbot-inbox-signal-daemon.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/brownbot-inbox-signal-daemon.err</string>
+</dict>
+</plist>

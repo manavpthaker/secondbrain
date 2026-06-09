@@ -1,0 +1,34 @@
+node_modules/
+dist/
+.env
+# Any .env backup/variant carries live secrets — never commit. (.env.example is
+# already tracked, so this only catches new variants like .env.bak.<ts>, .env.local)
+.env.*
+!.env.example
+auth_state/
+*.db
+*.db-shm
+*.db-wal
+.wwebjs_cache/
+.claude/
+# Tier 1 Phase 4 — meeting daemon runtime files. brownbot is a SERVICE_REPO
+# in sync-repos.sh, which `git pull`s every 5 min. Local writes to tracked
+# paths would fail the pull (logged-and-silent) and halt auto-deploy.
+/data/meeting-state.json
+/logs/*.log
+
+# Onboarding-generated personal config (created by `npm run onboard`). These hold
+# the operator's name, people, voice, and facts — never commit them. The repo
+# ships generic starting points in config/profile.example.json + context/_examples/.
+config/profile.json
+.onboard-state.json
+context/shared/identity.md
+context/shared/voice.md
+context/shared/profile.md
+context/seeds/facts.json
+context/admin/CLAUDE.md
+context/personal/CLAUDE.md
+context/finance/CLAUDE.md
+context/work/CLAUDE.md
+context/health/CLAUDE.md
+context/job-search/CLAUDE.md

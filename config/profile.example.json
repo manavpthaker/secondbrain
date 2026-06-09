@@ -1,0 +1,36 @@
+{
+  "_comment": "Copy to config/profile.json (gitignored) or let `npm run onboard` generate it. This is the single source of truth for who the assistant is and who it serves. Secrets (phone/email) live in .env, referenced here by env-var name.",
+
+  "botName": "Assistant",
+  "triggerWord": "@assistant",
+  "householdName": "household",
+
+  "owner": {
+    "id": "owner",
+    "name": "Owner",
+    "shortName": "Owner",
+    "tone": "direct",
+    "role": "admin",
+    "allowedGroups": ["admin", "home", "work", "finance", "health", "reflection", "brain-pulse", "content"],
+    "phoneEnv": "USER_OWNER",
+    "emailEnv": "USER_OWNER_EMAIL"
+  },
+
+  "members": [
+    {
+      "id": "partner",
+      "name": "Partner",
+      "tone": "warm",
+      "role": "member",
+      "allowedGroups": ["home"],
+      "phoneEnv": "USER_PARTNER",
+      "emailEnv": "USER_PARTNER_EMAIL"
+    }
+  ],
+
+  "people": [
+    { "name": "Partner", "relationship": "partner", "notes": "The owner's partner. The assistant is not in direct contact with them." }
+  ],
+
+  "groupsEnabled": ["admin", "home"]
+}

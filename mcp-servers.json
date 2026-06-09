@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "instacart": {
+      "command": "/opt/homebrew/bin/npx",
+      "args": ["-y", "@instacart/mcp-server"],
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    },
+    "spotify": {
+      "command": "/opt/homebrew/bin/npx",
+      "args": ["-y", "spotify-mcp-server"],
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  }
+}
