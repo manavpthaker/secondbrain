@@ -16,21 +16,29 @@ Everything stays local. The whole brain is a single SQLite file on your machine.
 git clone https://github.com/manavpthaker/secondbrain
 cd secondbrain
 npm install
-secondbrain init        # conversational onboarding (the "Mirror")
+npm run build
+npm run onboard                 # conversational onboarding (the "Mirror")
 ```
 
-`secondbrain init` is **the Mirror** — a short conversation that interviews you (who you are, who's in your circle, how you want it to talk to you, which areas to turn on) and then generates everything: your assistant's identity and voice, an always-on profile, seed facts, per-group context, and your `.env`. Want to see what it produces without touching anything? `npm run onboard:dry` writes to a throwaway folder and prints.
+`npm run onboard` is **the Mirror** — a short conversation that interviews you (who you are, who's in your circle, how you want it to talk to you, which areas to turn on) and then generates everything: your assistant's identity and voice, an always-on profile, seed facts, per-group context, and your `.env`. Want to see what it produces without touching anything? `npm run onboard:dry` writes to a throwaway folder and prints.
 
 Then:
 
 ```bash
-secondbrain start       # start the assistant (production)
-secondbrain doctor      # health check: facts seeded, loops firing, backup fresh
-
-# Dev shortcuts (still work):
 npm run dev             # hot reload (tsx) — development
-npm run build           # tsc → dist/
 npm start               # node dist/index.js — production
+npm run doctor          # health check: facts seeded, loops firing, backup fresh
+```
+
+### CLI (optional)
+
+After building, you can install the CLI globally for convenience:
+
+```bash
+npm link                        # makes `secondbrain` available system-wide
+secondbrain start               # same as npm start
+secondbrain doctor              # same as npm run doctor
+secondbrain init                # same as npm run onboard
 ```
 
 On first run with no `GROUP_*` IDs set, the bot logs the iMessage chat IDs it sees so you can map them into `.env`.
