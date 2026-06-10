@@ -28,7 +28,7 @@ const DRY = process.argv.includes('--dry');
 const DRY_DIR = join(ROOT, '.onboard-dry');
 const STATE_PATH = join(ROOT, '.onboard-state.json');
 
-const MODEL = process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6';
+const MODEL = process.env.SECONDBRAIN_MODEL || process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6';
 
 // Group key → the context dir its CLAUDE.md lives in, and the example template
 // to seed it from. (The Home group's context dir is historically "personal".)
@@ -287,7 +287,7 @@ async function phaseApiKey(state: any): Promise<string> {
   process.stdout.write('  validating… ');
   const client = new Anthropic({ apiKey: key });
   try {
-    await client.messages.create({ model: process.env.BROWNBOT_ROUTER_MODEL || 'claude-haiku-4-5', max_tokens: 8, messages: [{ role: 'user', content: 'ping' }] });
+    await client.messages.create({ model: process.env.SECONDBRAIN_ROUTER_MODEL || process.env.BROWNBOT_ROUTER_MODEL || 'claude-haiku-4-5', max_tokens: 8, messages: [{ role: 'user', content: 'ping' }] });
     console.log('ok.');
   } catch (err) {
     console.log('failed.');

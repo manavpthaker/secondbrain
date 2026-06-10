@@ -301,7 +301,7 @@ Keep it concise — I'm winding down.`
       console.log('[Scheduler] Weekly git summary');
       try {
         const group = groupConfig('admin', 'Admin', ['github', 'memory'], 'context/admin');
-        const repos = process.env.BROWNBOT_ALLOWED_REPOS || 'brownbot';
+        const repos = process.env.SECONDBRAIN_ALLOWED_REPOS || process.env.BROWNBOT_ALLOWED_REPOS || 'secondbrain';
         const response = await runAgent(group, user,
           `Give me a commit summary for the past week across these repos: ${repos}. Use git_commit_summary for each. Save a memory checkpoint with the highlights.`
         );

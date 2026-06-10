@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.agent</string>
+  <string>com.secondbrain.agent</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
     <string>-c</string>
-    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/brownbot &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node dist/index.js</string>
+    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/secondbrain &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node dist/index.js</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -17,8 +17,8 @@
   <key>ThrottleInterval</key>
   <integer>10</integer>
   <key>StandardOutPath</key>
-  <string>/tmp/brownbot.log</string>
+  <string>/tmp/secondbrain.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/brownbot.err</string>
+  <string>/tmp/secondbrain.err</string>
 </dict>
 </plist>

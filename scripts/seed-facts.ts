@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import { readFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import db, { saveFact, factsAbout, upsertPerson } from '../src/db.js';
 import { getProfileConfig } from '../src/config.js';
+import { packageSeedsDir } from '../src/paths.js';
 
 /**
  * Seed the assistant's baseline knowledge about the owner into the `facts` table.
@@ -30,8 +30,7 @@ import { getProfileConfig } from '../src/config.js';
  *        tsx scripts/seed-facts.ts --dry     (preview, no writes)
  */
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const FACTS_PATH = join(__dirname, '..', 'context', 'seeds', 'facts.json');
+const FACTS_PATH = join(packageSeedsDir, 'facts.json');
 
 const DRY = process.argv.includes('--dry');
 

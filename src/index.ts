@@ -23,8 +23,8 @@ import { startDashboard } from './dashboard.js';
 // no-emoji rule governs the agent's actual replies, not this plumbing signal.)
 const RECEIVED_ACK = '👀👍🏽';
 
-async function main() {
-  console.log('[brownbot] Starting...');
+export async function main() {
+  console.log('[secondbrain] Starting...');
 
   // Initialize users and groups from .env
   initUsers();
@@ -33,21 +33,21 @@ async function main() {
   // Check Brown Man Money health
   const bmmUp = await checkBmmHealth();
   if (bmmUp) {
-    console.log('[brownbot] Brown Man Money server: healthy');
+    console.log('[secondbrain] Brown Man Money server: healthy');
   } else {
-    console.warn('[brownbot] Brown Man Money server is NOT running. Finance group will be limited.');
-    console.warn('[brownbot]   Start it with: cd ~/Documents/GitHub/brown-man-money && npm start');
+    console.warn('[secondbrain] Brown Man Money server is NOT running. Finance group will be limited.');
+    console.warn('[secondbrain]   Start it with: cd ~/Documents/GitHub/brown-man-money && npm start');
   }
 
   // Finance config guard — without these the read tools throw and the bot silently
   // serves week-old cached metric facts. Fail loud at boot instead of hiding it.
   const missingFinanceVars = checkFinanceConfig();
   if (missingFinanceVars.length) {
-    console.warn(`[brownbot] ⚠️  Finance config incomplete — missing: ${missingFinanceVars.join(', ')}.`);
-    console.warn('[brownbot]   Plaid live-sync + finance reads will FAIL and fall back to stale cached numbers.');
-    console.warn('[brownbot]   Set these in brownbot .env (see .env.example) and restart.');
+    console.warn(`[secondbrain] ⚠️  Finance config incomplete — missing: ${missingFinanceVars.join(', ')}.`);
+    console.warn('[secondbrain]   Plaid live-sync + finance reads will FAIL and fall back to stale cached numbers.');
+    console.warn('[secondbrain]   Set these in your .env (see .env.example) and restart.');
   } else {
-    console.log('[brownbot] Finance config: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / BMM_USER_ID present');
+    console.log('[secondbrain] Finance config: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / BMM_USER_ID present');
   }
 
   // Start MCP servers (Instacart, Spotify, etc.)
@@ -64,14 +64,14 @@ async function main() {
     // 1. Resolve user
     const user = resolveUser(senderJid);
     if (!user) {
-      console.log(`[brownbot] Unknown sender: ${senderJid}`);
+      console.log(`[secondbrain] Unknown sender: ${senderJid}`);
       return;
     }
 
     // 2. Resolve group
     const group = resolveGroup(remoteJid);
     if (!group) {
-      console.log(`[brownbot] Unknown group: ${remoteJid}`);
+      console.log(`[secondbrain] Unknown group: ${remoteJid}`);
       return;
     }
 
@@ -82,7 +82,7 @@ async function main() {
       return;
     }
 
-    console.log(`[brownbot] ${user.name} → ${group.name}: ${text.slice(0, 80)}...`);
+    console.log(`[secondbrain] ${user.name} → ${group.name}: ${text.slice(0, 80)}...`);
 
     // 4. Classify sync vs async (Haiku, regex fallback) + fire the fixed receipt ack.
     const mode = await detectMode(text);
@@ -142,10 +142,14 @@ async function main() {
   // Start content flywheel — Sat 10:00 ET draft from past week's brain signal.
   startContentFlywheel();
 
-  console.log('[brownbot] Ready. Listening for iMessages.');
+  console.log('[secondbrain] Ready. Listening for iMessages.');
 }
 
-main().catch((err) => {
-  console.error('[brownbot] Fatal:', err);
-  process.exit(1);
-});
+// Auto-run when invoked directly (not imported by CLI)
+const isDirectRun = process.argv[1]?.endsWith('index.js') || process.argv[1]?.endsWith('index.ts');
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error('[secondbrain] Fatal:', err);
+    process.exit(1);
+  });
+}

@@ -1,4 +1,4 @@
-# Releasing brownbot publicly
+# Releasing Second Brain publicly
 
 This branch makes the **working tree** clean of personal data. It does **not** clean
 git history — the owner's data still lives in older commits reachable from `main`.
@@ -27,10 +27,10 @@ git commit -m "Initial public release"
 # 2. Sanity check: there must be exactly ONE commit, and zero personal data.
 git log --oneline                      # expect a single line
 git grep -niE 'manav|indira|thaker|brownmanbrain|indiralondono' -- . ':!*example*' || echo "clean"
-#   (the only allowed hit is the github.com/manavpthaker/brownbot URL in README)
+#   (the only allowed hit is the github.com/manavpthaker/secondbrain URL in README)
 
 # 3. Create the empty public repo on GitHub (no README/license/gitignore), then:
-git remote add public git@github.com:<you>/brownbot.git   # the NEW public repo
+git remote add public git@github.com:<you>/secondbrain.git   # the NEW public repo
 git push public public:main
 
 # 4. Done. Delete the local orphan branch when you're satisfied.
@@ -54,8 +54,8 @@ riskier, and every collaborator must re-clone afterward. Use
 
 ```bash
 pip install git-filter-repo
-git clone --mirror git@github.com:manavpthaker/brownbot.git brownbot-scrub
-cd brownbot-scrub
+git clone --mirror git@github.com:manavpthaker/secondbrain.git secondbrain-scrub
+cd secondbrain-scrub
 
 # 1. Drop files that only ever held personal data, across ALL history.
 git filter-repo --invert-paths \
@@ -101,4 +101,4 @@ problem because it starts from zero history — which is why it's the default.
    don't un-leak a key that was already pushed somewhere.
 2. Turn on **Secret scanning** and **Push protection** in repo settings.
 3. Update the launch content's repo link if the public repo lives at a new path.
-4. Smoke-test the published tree on a clean machine: `npm install && npm run onboard:dry`.
+4. Smoke-test the published tree on a clean machine: `npm install && secondbrain init --dry`.

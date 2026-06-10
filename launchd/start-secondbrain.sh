@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /Users/YOUR_USERNAME/Documents/GitHub/brownbot
+cd /Users/YOUR_USERNAME/Documents/GitHub/secondbrain
 set -a
 source .env
 set +a

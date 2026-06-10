@@ -1,6 +1,5 @@
 import 'dotenv/config';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import {
   isEmailExtracted,
   markEmailExtracted,
@@ -15,6 +14,7 @@ import { sendMessage, getDefaultRecipient } from '../src/channels/imessage.js';
 import { getAnthropicClient } from '../src/lib/anthropic.js';
 import { parseStrEnv, parseNumEnv, parseBoolEnv } from '../src/lib/env.js';
 import { extractFirstJson, makeLogger, haikuPrefilter, runDaemon } from '../src/lib/daemon.js';
+import { logsDir } from '../src/paths.js';
 
 // Tier 2 — proactive inbox-signal extraction daemon.
 //
@@ -46,16 +46,14 @@ import { extractFirstJson, makeLogger, haikuPrefilter, runDaemon } from '../src/
 //
 // Surfacing is otherwise free: tasks ride heartbeat.ts, facts ride brain-pulse.
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = join(__dirname, '..');
-const LOG_PATH = join(REPO_ROOT, 'logs', 'inbox-signal-daemon.log');
+const LOG_PATH = join(logsDir, 'inbox-signal-daemon.log');
 
 const INTERVAL_MS = parseNumEnv('INBOX_SIGNAL_INTERVAL_MS', 15 * 60 * 1000);
 const BATCH = parseNumEnv('INBOX_SIGNAL_BATCH', 50);
 const WINDOW = parseStrEnv('INBOX_SIGNAL_WINDOW', '2d'); // Spark newer_than window
 const ENABLED = parseBoolEnv('INBOX_SIGNAL_ENABLED', true);
-const PREFILTER_MODEL = parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
-const EXTRACT_MODEL = parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
+const PREFILTER_MODEL = parseStrEnv('SECONDBRAIN_ROUTER_MODEL', '') || parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
+const EXTRACT_MODEL = parseStrEnv('SECONDBRAIN_MODEL', '') || parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
 
 const TEST_MODE = process.argv.includes('--test');
 const log = makeLogger(LOG_PATH, TEST_MODE);

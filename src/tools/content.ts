@@ -25,7 +25,7 @@ import type { ToolDef } from './index.js';
 // `source='reflection'` fact with `valid_until = +30d` so it survives the
 // delete but ages out of FTS retrieval long-term.
 //
-// Drafts land in `~/brownbot-drafts/<kind>/<date>-<slug>.md` — outside any
+// Drafts land in `the drafts directory at<kind>/<date>-<slug>.md` — outside any
 // tracked git repo. brownbot does NOT commit/push into `brown-man-content`;
 // the file is for the user to review and hand-publish.
 
@@ -87,7 +87,7 @@ export const contentTools: ToolDef[] = [
   {
     definition: {
       name: 'draft_linkedin_post',
-      description: 'Save a LinkedIn post draft. Writes the markdown to ~/brownbot-drafts/linkedin/<date>-<slug>.md AND creates a fact_drafts row tracking it. USE WHEN: composing a personal LinkedIn post from brain signal. Cite the source_fact_ids you grounded the post in — DO NOT fabricate metrics.',
+      description: 'Save a LinkedIn post draft. Writes the markdown to the drafts directory atlinkedin/<date>-<slug>.md AND creates a fact_drafts row tracking it. USE WHEN: composing a personal LinkedIn post from brain signal. Cite the source_fact_ids you grounded the post in — DO NOT fabricate metrics.',
       input_schema: {
         type: 'object' as const,
         properties: {
@@ -129,7 +129,7 @@ export const contentTools: ToolDef[] = [
   {
     definition: {
       name: 'draft_newsletter_blurb',
-      description: 'Save a newsletter blurb draft. Same shape as draft_linkedin_post but writes under ~/brownbot-drafts/newsletter/.',
+      description: 'Save a newsletter blurb draft. Same shape as draft_linkedin_post but writes under the drafts directory atnewsletter/.',
       input_schema: {
         type: 'object' as const,
         properties: {
@@ -186,7 +186,7 @@ export const contentTools: ToolDef[] = [
   {
     definition: {
       name: 'approve_draft',
-      description: 'Mark a draft approved (status=approved, reviewed_at=now). Does NOT publish — the markdown file stays in ~/brownbot-drafts/ for the user to hand-publish.',
+      description: 'Mark a draft approved (status=approved, reviewed_at=now). Does NOT publish — the markdown file stays in the drafts directory at for the user to hand-publish.',
       input_schema: {
         type: 'object' as const,
         properties: {

@@ -1,6 +1,7 @@
 import { resolve, normalize } from 'path';
 import { homedir } from 'os';
 import { mkdirSync } from 'fs';
+import { draftsDir as defaultDraftsDir } from '../paths.js';
 
 /**
  * Centralized guardrails for file-touching tools — read_context_file,
@@ -10,13 +11,16 @@ import { mkdirSync } from 'fs';
  * call can't grep `/etc/passwd` or read another project's `.env`.
  */
 
-const GH_ROOT = process.env.BROWNBOT_GH_ROOT
+const GH_ROOT = process.env.SECONDBRAIN_GH_ROOT
+  || process.env.BROWNBOT_GH_ROOT
   || `${homedir()}/Documents/GitHub`;
 
-// Repos brownbot tools may read/write into. Set BROWNBOT_ALLOWED_REPOS in .env
+// Repos the tools may read/write into. Set SECONDBRAIN_ALLOWED_REPOS in .env
 // (comma-separated) to allowlist your own sibling projects. Defaults to just
 // this repo so a fresh deploy can't be steered into reading arbitrary folders.
-const ALLOWED_REPOS_RAW = process.env.BROWNBOT_ALLOWED_REPOS || 'brownbot';
+const ALLOWED_REPOS_RAW = process.env.SECONDBRAIN_ALLOWED_REPOS
+  || process.env.BROWNBOT_ALLOWED_REPOS
+  || 'secondbrain';
 
 export const ALLOWED_REPO_ROOTS: string[] = ALLOWED_REPOS_RAW
   .split(',')
@@ -57,7 +61,9 @@ function withinAnyRoot(abs: string): string | null {
 }
 
 export interface ResolveOpts {
-  /** Allow paths under the brownbot repo only (for context-file writes). */
+  /** Allow paths under the secondbrain repo only (for context-file writes). */
+  secondbrainOnly?: boolean;
+  /** @deprecated Use secondbrainOnly */
   brownbotOnly?: boolean;
   /** Skip the secret-file check (e.g., for reading a documented config). Use sparingly. */
   allowSecrets?: boolean;
@@ -82,10 +88,10 @@ export function resolveSafePath(inputPath: string, opts: ResolveOpts = {}): stri
   if (!root) {
     throw new Error(`path-utils: ${abs} is outside the allowed repo roots`);
   }
-  if (opts.brownbotOnly) {
-    const brownbot = resolve(GH_ROOT, 'brownbot');
-    if (root !== brownbot) {
-      throw new Error(`path-utils: ${abs} is not under brownbot (brownbotOnly)`);
+  if (opts.secondbrainOnly || opts.brownbotOnly) {
+    const sbRoot = resolve(GH_ROOT, 'secondbrain');
+    if (root !== sbRoot) {
+      throw new Error(`path-utils: ${abs} is not under the secondbrain repo`);
     }
   }
   if (!opts.allowSecrets && looksLikeSecret(abs)) {
@@ -141,7 +147,9 @@ export function subjectFromAnalysis(company: string, role: string): string {
 // deliberately do NOT add `brown-man-content` to ALLOWED_REPOS — drafts get
 // their own root, gated by BROWNBOT_DRAFTS_ROOT (default ~/brownbot-drafts).
 
-const DRAFTS_ROOT = process.env.BROWNBOT_DRAFTS_ROOT || `${homedir()}/brownbot-drafts`;
+const DRAFTS_ROOT = process.env.SECONDBRAIN_DRAFTS_ROOT
+  || process.env.BROWNBOT_DRAFTS_ROOT
+  || defaultDraftsDir;
 
 function slugForDraft(title: string): string {
   return title

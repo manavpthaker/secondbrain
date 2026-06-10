@@ -41,7 +41,7 @@ export async function transcribeAudio(filePath: string): Promise<string | null> 
   if (!transcriptionAvailable()) return null;
   if (!existsSync(filePath)) return null;
 
-  const workDir = mkdtempSync(join(tmpdir(), 'brownbot-stt-'));
+  const workDir = mkdtempSync(join(tmpdir(), 'secondbrain-stt-'));
   const wavPath = join(workDir, 'audio.wav');
 
   try {

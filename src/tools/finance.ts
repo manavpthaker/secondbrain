@@ -23,7 +23,7 @@ async function bmmFetch(path: string, options?: RequestInit): Promise<string> {
 
 async function sb(path: string): Promise<any> {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    throw new Error('SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not configured in brownbot .env');
+    throw new Error('SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not configured in .env');
   }
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
@@ -33,7 +33,7 @@ async function sb(path: string): Promise<any> {
 }
 
 function requireUser(): string {
-  if (!USER_ID) throw new Error('BMM_USER_ID not set in brownbot .env');
+  if (!USER_ID) throw new Error('BMM_USER_ID not set in .env');
   return USER_ID;
 }
 
@@ -42,7 +42,7 @@ function requireUser(): string {
 // something has to drive this on a schedule or the numbers go stale. Returns the
 // raw BMM response string (or an error string) for logging — never throws.
 export async function syncPlaidTransactions(days = 30): Promise<string> {
-  if (!USER_ID) return 'BMM_USER_ID not set in brownbot .env — skipping Plaid sync.';
+  if (!USER_ID) return 'BMM_USER_ID not set in .env — skipping Plaid sync.';
   return bmmFetch('/api/plaid/sync-transactions', {
     method: 'POST',
     body: JSON.stringify({ userId: USER_ID, days }),

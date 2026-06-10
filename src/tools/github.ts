@@ -2,19 +2,18 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import type { ToolDef } from './index.js';
 import { validateRepoName } from './path-utils.js';
+import { userContextDir } from '../paths.js';
 
 const exec = promisify(execFile);
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const CONTEXT_DIR = join(__dirname, '..', '..', 'context');
+const CONTEXT_DIR = userContextDir;
 
 export const githubTools: ToolDef[] = [
   {
     definition: {
       name: 'read_context_file',
-      description: 'Read a file from the brownbot context directory or a local repo.',
+      description: 'Read a file from the context directory or a local repo.',
       input_schema: {
         type: 'object' as const,
         properties: {
@@ -33,7 +32,7 @@ export const githubTools: ToolDef[] = [
   {
     definition: {
       name: 'write_context_file',
-      description: 'Write or append to a file in the brownbot context directory.',
+      description: 'Write or append to a file in the context directory.',
       input_schema: {
         type: 'object' as const,
         properties: {

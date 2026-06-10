@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.meeting-daemon</string>
+  <string>com.secondbrain.meeting-daemon</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
     <string>-c</string>
-    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/brownbot &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node --import /Users/YOUR_USERNAME/Documents/GitHub/brownbot/node_modules/tsx/dist/loader.mjs scripts/meeting-daemon.ts</string>
+    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/secondbrain &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node --import /Users/YOUR_USERNAME/Documents/GitHub/secondbrain/node_modules/tsx/dist/loader.mjs scripts/meeting-daemon.ts</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -17,8 +17,8 @@
   <key>ThrottleInterval</key>
   <integer>10</integer>
   <key>StandardOutPath</key>
-  <string>/tmp/brownbot-meeting-daemon.log</string>
+  <string>/tmp/secondbrain-meeting-daemon.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/brownbot-meeting-daemon.err</string>
+  <string>/tmp/secondbrain-meeting-daemon.err</string>
 </dict>
 </plist>

@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.contacts-sync</string>
+  <string>com.secondbrain.contacts-sync</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
     <string>-c</string>
-    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/brownbot &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node --import /Users/YOUR_USERNAME/Documents/GitHub/brownbot/node_modules/tsx/dist/loader.mjs scripts/import-contacts.ts</string>
+    <string>cd /Users/YOUR_USERNAME/Documents/GitHub/secondbrain &amp;&amp; set -a &amp;&amp; source .env &amp;&amp; set +a &amp;&amp; exec /opt/homebrew/bin/node --import /Users/YOUR_USERNAME/Documents/GitHub/secondbrain/node_modules/tsx/dist/loader.mjs scripts/import-contacts.ts</string>
   </array>
   <key>StartCalendarInterval</key>
   <dict>
@@ -20,8 +20,8 @@
   <key>RunAtLoad</key>
   <false/>
   <key>StandardOutPath</key>
-  <string>/tmp/brownbot-contacts-sync.log</string>
+  <string>/tmp/secondbrain-contacts-sync.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/brownbot-contacts-sync.err</string>
+  <string>/tmp/secondbrain-contacts-sync.err</string>
 </dict>
 </plist>

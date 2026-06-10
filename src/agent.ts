@@ -11,7 +11,7 @@ import { parseStrEnv } from './lib/env.js';
 const client = getAnthropicClient();
 
 const MAX_TURNS = 25;
-const MODEL = parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
+const MODEL = parseStrEnv('SECONDBRAIN_MODEL', '') || parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
 const MAX_TOKENS_DEFAULT = 8000;
 const MAX_TOKENS_THINKING = 16000;
 const THINKING_BUDGET = 3000;

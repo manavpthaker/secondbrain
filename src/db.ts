@@ -1,13 +1,10 @@
 import Database, { type Database as DatabaseType } from 'better-sqlite3';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { toSqliteDate } from './lib/dates.js';
 import { startOfTodayET, startOfWeekET } from './lib/time-et.js';
 import { normalizePhone } from './lib/phone.js';
+import { dbPath } from './paths.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DB_PATH = join(__dirname, '..', 'brownbot.db');
+const DB_PATH = dbPath;
 
 const db: DatabaseType = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');

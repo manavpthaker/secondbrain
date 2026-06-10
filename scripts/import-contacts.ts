@@ -16,7 +16,7 @@ import { upsertPerson } from '../src/db.js';
 // upsertPerson() dedups on email → phone → linkedin, so re-running merges rather than
 // duplicating, and a contact present in two sources (iCloud + Google) collapses to one
 // row when they share an email or phone. Run once to bootstrap, then nightly via
-// launchd/com.brownbot.contacts-sync.plist.
+// launchd/com.secondbrain.contacts-sync.plist.
 //
 // Usage: npm run import:contacts   (add --dry to preview without writing)
 

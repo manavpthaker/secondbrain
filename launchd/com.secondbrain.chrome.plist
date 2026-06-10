@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.chrome</string>
+  <string>com.secondbrain.chrome</string>
   <key>ProgramArguments</key>
   <array>
     <string>/Applications/Google Chrome.app/Contents/MacOS/Google Chrome</string>
@@ -15,8 +15,8 @@
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/tmp/brownbot-chrome.log</string>
+  <string>/tmp/secondbrain-chrome.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/brownbot-chrome.err</string>
+  <string>/tmp/secondbrain-chrome.err</string>
 </dict>
 </plist>

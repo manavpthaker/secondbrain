@@ -1,9 +1,9 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { readFileSync, existsSync } from 'fs';
-import { resolve } from 'path';
 import type Anthropic from '@anthropic-ai/sdk';
 import type { ToolDef } from './tools/index.js';
+import { mcpConfigPath } from './paths.js';
 
 interface McpServerConfig {
   command: string;
@@ -22,7 +22,7 @@ interface McpConnection {
 }
 
 const connections: McpConnection[] = [];
-const CONFIG_PATH = resolve(process.cwd(), 'mcp-servers.json');
+const CONFIG_PATH = mcpConfigPath;
 
 function loadConfig(): McpConfigFile | null {
   if (!existsSync(CONFIG_PATH)) {
@@ -46,7 +46,7 @@ async function connectServer(name: string, config: McpServerConfig): Promise<Too
     env: { ...process.env, ...config.env } as Record<string, string>,
   });
 
-  const client = new Client({ name: `brownbot-${name}`, version: '1.0.0' });
+  const client = new Client({ name: `secondbrain-${name}`, version: '1.0.0' });
 
   await client.connect(transport);
   connections.push({ client, transport, serverName: name });

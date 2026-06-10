@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import { promises as fs, existsSync, mkdirSync, renameSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import { getAnthropicClient } from '../src/lib/anthropic.js';
 import { makeLogger } from '../src/lib/daemon.js';
 import { listRawEvents } from '../src/tools/calendar.js';
@@ -19,6 +18,7 @@ import {
   setMemory,
 } from '../src/db.js';
 import { pushTaskToGoogle } from '../src/sync/tasks-sync.js';
+import { dataDir, logsDir } from '../src/paths.js';
 
 // Tier 1 Phase 4: Meeting Prep + Debrief Daemon.
 //
@@ -47,10 +47,8 @@ import { pushTaskToGoogle } from '../src/sync/tasks-sync.js';
 //   - per decision → saveFact({ fact_type: 'decision' })
 //   - per commitment made → saveFact({ fact_type: 'commitment' })
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = join(__dirname, '..');
-const STATE_PATH = join(REPO_ROOT, 'data', 'meeting-state.json');
-const LOG_PATH = join(REPO_ROOT, 'logs', 'meeting-daemon.log');
+const STATE_PATH = join(dataDir, 'meeting-state.json');
+const LOG_PATH = join(logsDir, 'meeting-daemon.log');
 
 const INTERNAL_DOMAINS = (
   process.env.INTERNAL_DOMAINS || 'gmail.com'
@@ -216,7 +214,7 @@ Compose a SHORT prep DM (≤8 lines):
 
   try {
     const res = await getAnthropicClient().messages.create({
-      model: process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6',
+      model: process.env.SECONDBRAIN_MODEL || process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6',
       max_tokens: 800,
       messages: [{ role: 'user', content: prompt }],
     });
@@ -274,7 +272,7 @@ ${transcript.slice(0, 30000)}`;
   let parsed: DebriefJson | null = null;
   try {
     const res = await getAnthropicClient().messages.create({
-      model: process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6',
+      model: process.env.SECONDBRAIN_MODEL || process.env.BROWNBOT_MODEL || 'claude-sonnet-4-6',
       max_tokens: 2000,
       messages: [{ role: 'user', content: prompt }],
     });

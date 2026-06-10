@@ -1,6 +1,5 @@
 import 'dotenv/config';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import {
   getUnextractedIMessages,
   markIMessagesExtracted,
@@ -17,6 +16,7 @@ import { pushTaskToGoogle } from '../src/sync/tasks-sync.js';
 import { getAnthropicClient } from '../src/lib/anthropic.js';
 import { parseStrEnv, parseNumEnv } from '../src/lib/env.js';
 import { extractFirstJson, makeLogger, haikuPrefilter, runDaemon } from '../src/lib/daemon.js';
+import { logsDir } from '../src/paths.js';
 
 // Phase 5: iMessage extraction daemon.
 //
@@ -40,14 +40,12 @@ import { extractFirstJson, makeLogger, haikuPrefilter, runDaemon } from '../src/
 // There is no proactive surfacing layer here by design — once a commitment lands
 // as a fact, getStaleCommitments() (brain-pulse) picks it up for free.
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = join(__dirname, '..');
-const LOG_PATH = join(REPO_ROOT, 'logs', 'imessage-daemon.log');
+const LOG_PATH = join(logsDir, 'imessage-daemon.log');
 
 const INTERVAL_MS = parseNumEnv('IMESSAGE_DAEMON_INTERVAL_MS', 10 * 60 * 1000);
 const BATCH = parseNumEnv('IMESSAGE_EXTRACT_BATCH', 100);
-const PREFILTER_MODEL = parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
-const EXTRACT_MODEL = parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
+const PREFILTER_MODEL = parseStrEnv('SECONDBRAIN_ROUTER_MODEL', '') || parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
+const EXTRACT_MODEL = parseStrEnv('SECONDBRAIN_MODEL', '') || parseStrEnv('BROWNBOT_MODEL', 'claude-sonnet-4-6');
 
 const TEST_MODE = process.argv.includes('--test');
 const log = makeLogger(LOG_PATH, TEST_MODE);

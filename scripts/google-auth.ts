@@ -3,11 +3,9 @@ import { google } from 'googleapis';
 import { createServer } from 'http';
 import { URL } from 'url';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { envPath } from '../src/paths.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ENV_PATH = join(__dirname, '..', '.env');
+const ENV_PATH = envPath;
 
 function writeRefreshToken(token: string): boolean {
   if (!existsSync(ENV_PATH)) return false;
@@ -79,8 +77,8 @@ const server = createServer(async (req, res) => {
     console.log('\n✓ Got refresh token!');
     if (wrote) {
       console.log('✓ Written to .env automatically.');
-      console.log('\nNow restart brownbot:');
-      console.log('  launchctl kickstart -k gui/$(id -u)/com.brownbot.agent\n');
+      console.log('\nNow restart secondbrain:');
+      console.log('  launchctl kickstart -k gui/$(id -u)/com.secondbrain.agent\n');
     } else {
       console.log('\n⚠ Could not find .env — add this manually:');
       console.log(`GOOGLE_CALENDAR_REFRESH_TOKEN=${tokens.refresh_token}\n`);

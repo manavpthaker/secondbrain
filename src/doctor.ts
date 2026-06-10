@@ -1,11 +1,11 @@
 import { existsSync, readdirSync, statSync } from 'fs';
 import { execSync } from 'child_process';
-import { homedir } from 'os';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import db, { getBrainStats, getTaskStats, factsAbout } from './db.js';
 import { checkFinanceConfig } from './tools/finance.js';
 import { getBotName, getProfileConfig } from './config.js';
+import { backupsDir, PACKAGE_ROOT } from './paths.js';
 
 /**
  * Health check for the live second brain. One source of truth for "is everything
@@ -39,9 +39,8 @@ const BACKUP_STALE_H = 30; // nightly 03:00 ET
 const DAEMON_TICK_STALE_H = 2; // KeepAlive daemons tick on the order of minutes
 const SYNC_STALE_H = 1; // scripts/sync-repos.sh runs every 5 min; 1h = 12 missed clean runs
 
-// Repo root, cwd-independent: this file compiles to dist/doctor.js, so ".." is
-// the brownbot checkout the 5-min sync pulls into.
-const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Package root for checking sync state etc.
+const REPO_ROOT = PACKAGE_ROOT;
 
 // Inner-circle people the seed guarantees; their absence means the seed never
 // ran. Derived from the profile config so a new operator's people are checked.
@@ -50,7 +49,7 @@ const SEEDED_PEOPLE = getProfileConfig().people.map((p) => p.name);
 // A canonical marker fact the seed always writes; its presence means the seed ran.
 const SEED_MARKER = { subject: '__seed__', predicate: 'ran' };
 
-const BACKUP_DIR = join(homedir(), 'brownbot-backups');
+const BACKUP_DIR = backupsDir;
 
 function hoursSince(iso: string | null | undefined): number | null {
   if (!iso) return null;
@@ -105,7 +104,7 @@ function checkBackup(): Check {
     return { name: 'nightly backup', status: 'warn', detail: `${BACKUP_DIR} missing — backup never ran` };
   }
   try {
-    const files = readdirSync(BACKUP_DIR).filter((f) => f.includes('brownbot.db'));
+    const files = readdirSync(BACKUP_DIR).filter((f) => f.includes('.db'));
     if (files.length === 0) {
       return { name: 'nightly backup', status: 'warn', detail: 'no backup files found' };
     }

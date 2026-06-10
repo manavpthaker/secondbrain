@@ -1,15 +1,13 @@
 import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import type { GroupConfig } from './group-resolver.js';
 import type { User } from './user-resolver.js';
 import { getOpenTasks, getOverdueTasksAll, getMemory, getRecentMemory, searchFacts, factsAbout, factsByPersonId, getFactsByType, peopleSearch, getRecentInteractions, type Fact, type Person, type Interaction } from './db.js';
 import { toolRegistry } from './tools/index.js';
 import { getProfileConfig } from './config.js';
+import { getRoot, resolveSharedFile, resolveContextPath } from './paths.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..');
+const ROOT = getRoot();
 
 let cachedIdentity: string | null = null;
 let cachedSecurity: string | null = null;
@@ -17,7 +15,7 @@ let cachedVoice: string | null = null;
 let cachedProfile: string | null = null;
 
 function loadSharedFile(filename: string): string {
-  const path = join(ROOT, 'context', 'shared', filename);
+  const path = resolveSharedFile(filename);
   if (existsSync(path)) {
     return readFileSync(path, 'utf-8');
   }

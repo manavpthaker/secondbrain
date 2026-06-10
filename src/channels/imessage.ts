@@ -55,7 +55,7 @@ const SIPS_BIN = process.env.SIPS_BIN || '/usr/bin/sips';
 // Convert an unsupported image (heic/heic-sequence/tiff/avif/...) to a base64 JPEG via
 // sips. Returns null on failure so the caller can skip without crashing the poll loop.
 function convertImageToJpegBase64(filePath: string, rowId: number): string | null {
-  const tmpPath = join(tmpdir(), `brownbot-img-${rowId}-${Date.now()}.jpg`);
+  const tmpPath = join(tmpdir(), `secondbrain-img-${rowId}-${Date.now()}.jpg`);
   try {
     execFileSync(SIPS_BIN, ['-s', 'format', 'jpeg', filePath, '--out', tmpPath], {
       stdio: 'ignore',

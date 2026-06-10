@@ -13,7 +13,7 @@ function hostnameOf(url: string): string {
 // and the convenience `browser_navigate` tool flow through this.
 async function navigateToUrl(url: string, groupKey: string): Promise<string> {
   if (!isBrowserConnected()) {
-    return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Brownbot Bridge extension is loaded.';
+    return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Second Brain Bridge extension is loaded.';
   }
   if (!url || typeof url !== 'string') return 'browser_navigate: missing or non-string url';
 
@@ -80,7 +80,7 @@ Actions:
     handler: async (input, context?: ToolContext) => {
       if (!isBrowserConnected()) {
         console.log('[browser] tool called but extension not connected');
-        return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Brownbot Bridge extension is loaded.';
+        return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Second Brain Bridge extension is loaded.';
       }
 
       const action = input.action as string;

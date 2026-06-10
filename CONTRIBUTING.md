@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for taking a look. brownbot is a personal-AI-assistant template — built for one
+Thanks for taking a look. Second Brain is a personal-AI-assistant template — built for one
 person, generalized so anyone can run their own.
 
 ## Ground rules

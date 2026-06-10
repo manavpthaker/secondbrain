@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.bmm</string>
+  <string>com.secondbrain.bmm</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
@@ -15,8 +15,8 @@
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/tmp/brownbot-bmm.log</string>
+  <string>/tmp/secondbrain-bmm.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/brownbot-bmm.err</string>
+  <string>/tmp/secondbrain-bmm.err</string>
 </dict>
 </plist>

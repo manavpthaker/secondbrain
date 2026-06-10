@@ -3,25 +3,20 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brownbot.backup</string>
+  <string>com.secondbrain.sync</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>/Users/YOUR_USERNAME/Documents/GitHub/brownbot/scripts/backup-db.sh</string>
+    <string>/Users/YOUR_USERNAME/Documents/GitHub/secondbrain/scripts/sync-repos.sh</string>
   </array>
-  <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key>
-    <integer>3</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
+  <key>StartInterval</key>
+  <integer>300</integer>
   <key>RunAtLoad</key>
-  <false/>
+  <true/>
   <key>StandardOutPath</key>
-  <string>/Users/YOUR_USERNAME/Library/Logs/brownbot-backup.log</string>
+  <string>/Users/YOUR_USERNAME/Library/Logs/secondbrain-sync.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/YOUR_USERNAME/Library/Logs/brownbot-backup.log</string>
+  <string>/Users/YOUR_USERNAME/Library/Logs/secondbrain-sync.log</string>
   <key>EnvironmentVariables</key>
   <dict>
     <key>PATH</key>

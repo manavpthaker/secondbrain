@@ -1,4 +1,4 @@
-# brownbot
+# Second Brain
 
 A personal AI assistant that runs on **your own Mac**, talks to you over **iMessage**, and works as a second brain: executive assistant, household coordinator, and a knowledge layer that actually remembers.
 
@@ -13,20 +13,24 @@ Everything stays local. The whole brain is a single SQLite file on your machine.
 ## Quickstart
 
 ```bash
-git clone https://github.com/manavpthaker/brownbot
-cd brownbot
+git clone https://github.com/manavpthaker/secondbrain
+cd secondbrain
 npm install
-npm run onboard
+secondbrain init        # conversational onboarding (the "Mirror")
 ```
 
-`npm run onboard` is **the Mirror** — a short conversation that interviews you (who you are, who's in your circle, how you want it to talk to you, which areas to turn on) and then generates everything: your assistant's identity and voice, an always-on profile, seed facts, per-group context, and your `.env`. Want to see what it produces without touching anything? `npm run onboard:dry` writes to a throwaway folder and prints.
+`secondbrain init` is **the Mirror** — a short conversation that interviews you (who you are, who's in your circle, how you want it to talk to you, which areas to turn on) and then generates everything: your assistant's identity and voice, an always-on profile, seed facts, per-group context, and your `.env`. Want to see what it produces without touching anything? `npm run onboard:dry` writes to a throwaway folder and prints.
 
 Then:
 
 ```bash
-npm run dev     # hot reload (tsx) — development
-npm run build   # tsc → dist/
-npm start       # node dist/index.js — production
+secondbrain start       # start the assistant (production)
+secondbrain doctor      # health check: facts seeded, loops firing, backup fresh
+
+# Dev shortcuts (still work):
+npm run dev             # hot reload (tsx) — development
+npm run build           # tsc → dist/
+npm start               # node dist/index.js — production
 ```
 
 On first run with no `GROUP_*` IDs set, the bot logs the iMessage chat IDs it sees so you can map them into `.env`.
@@ -59,14 +63,14 @@ Permissions live in `src/user-resolver.ts`. Who's who, names, and tone come from
 
 ## The brain layer
 
-Beyond replying, the assistant persists structured knowledge in a local `brownbot.db`:
+Beyond replying, the assistant persists structured knowledge in a local `secondbrain.db`:
 
 - **Facts** — atomic `(subject, predicate, object)` rows with SQLite FTS5 retrieval. The system prompt gets a `--- Relevant Knowledge ---` block tailored to whatever you just asked.
 - **People graph** — people + emails/phones + interactions, populated from Calendar attendees, email senders, and (optionally) Apple Contacts.
 - **Nightly reflection** — scans everything new across groups, extracts durable facts, and writes a morning brief prepended to the 06:30 calendar prep.
 - **Dashboard** — read-only HTML at `http://127.0.0.1:4000`, loopback-only. Reach it from your phone over Tailscale.
 - **Recall** — `recall_memory` pulls everything stored about a subject in one call, so "I don't have that" only happens when storage is genuinely empty.
-- **Health check** — `npm run doctor` reports whether facts are seeded, loops are firing, and backups are fresh.
+- **Health check** — `secondbrain doctor` (or `npm run doctor`) reports whether facts are seeded, loops are firing, and backups are fresh.
 
 ### Talking to it about reminders
 
@@ -78,6 +82,8 @@ Surfaced tasks carry a visible `#<id>`. Reply with `snooze #N 3 days`, `cancel #
 
 Onboarding writes `config/profile.json` and `.env` for you. To adjust later, edit those directly — see [`docs/CUSTOMIZING.md`](./docs/CUSTOMIZING.md) for the profile schema and how the context files fit together. `.env.example` documents every variable; only `ANTHROPIC_API_KEY` is strictly required to boot.
 
+Environment variables use the `SECONDBRAIN_*` prefix (the older `BROWNBOT_*` names still work for back-compat).
+
 MCP servers (e.g. Instacart, Spotify) are configured separately in `mcp-servers.json`, same format as Claude Desktop.
 
 ---
@@ -87,8 +93,8 @@ MCP servers (e.g. Instacart, Spotify) are configured separately in `mcp-servers.
 The repo ships `launchd/*.plist` agents (main loop, nightly backup, 5-min self-sync, and the KeepAlive extraction daemons). Symlink the ones you want into `~/Library/LaunchAgents` and `launchctl load` them:
 
 ```bash
-ln -sf "$PWD/launchd/com.brownbot.agent.plist"  ~/Library/LaunchAgents/com.brownbot.agent.plist
-launchctl load ~/Library/LaunchAgents/com.brownbot.agent.plist
+ln -sf "$PWD/launchd/com.secondbrain.agent.plist"  ~/Library/LaunchAgents/com.secondbrain.agent.plist
+launchctl load ~/Library/LaunchAgents/com.secondbrain.agent.plist
 ```
 
 (A symlink survives reboot and lets the optional 5-min auto-sync flow through; a plist loaded directly from the repo path runs now but won't auto-start on boot.)

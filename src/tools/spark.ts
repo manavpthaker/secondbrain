@@ -65,7 +65,7 @@ async function spark(args: string[]): Promise<string> {
     const e = err as { stdout?: string; stderr?: string; message?: string; code?: string };
     const detail = (e.stderr || e.stdout || e.message || 'unknown error').trim();
     if (detail.includes('Spark Desktop') || detail.toLowerCase().includes('connect')) {
-      return `Spark error: ${detail}\n\nIs Spark Desktop running on the Mac mini? brownbot's spark tools talk to Spark Desktop via IPC.`;
+      return `Spark error: ${detail}\n\nIs Spark Desktop running on the Mac mini? The spark tools talk to Spark Desktop via IPC.`;
     }
     return `Spark error: ${detail}`;
   }

@@ -25,7 +25,7 @@ export const linkedinTools: ToolDef[] = [
       const keywords = input.keywords as string | undefined;
 
       if (!isBrowserConnected()) {
-        return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Brownbot Bridge extension is loaded.';
+        return 'Chrome extension not connected — open Chrome on the Mac mini and ensure the Second Brain Bridge extension is loaded.';
       }
 
       let tabId: number | undefined;

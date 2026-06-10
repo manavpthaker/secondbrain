@@ -1,12 +1,10 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { setMemory, getMemory, createTask, saveFact, searchFacts, factsAbout, completeFact, extendFactValidity, getRecentHygieneActions, revertHygieneRun, type Fact } from '../db.js';
 import type { ToolDef, ToolContext } from './index.js';
+import { getRoot } from '../paths.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..', '..');
+const ROOT = getRoot();
 
 /**
  * Memory tools — inspired by OpenClaw's memory system.

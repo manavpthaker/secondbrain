@@ -10,8 +10,8 @@ import { getUnreviewedDraftsCount } from './db.js';
 // pick an angle, draft one LinkedIn post, save it via the `content` tools.
 // The agent DMs a preview back.
 //
-// Drafts land in ~/brownbot-drafts/linkedin/ (outside any tracked repo, so
-// sync-repos.sh never races us). the user reviews and hand-publishes.
+// Drafts land in the drafts directory (outside any tracked repo, so
+// sync-repos.sh never races us). The user reviews and hand-publishes.
 
 export async function runContentFlywheel(): Promise<void> {
   await runProactivePulse<{ unreviewed: number }>({

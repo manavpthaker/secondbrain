@@ -1,12 +1,33 @@
 {
-  "name": "brownbot",
+  "name": "secondbrain",
   "version": "1.0.0",
-  "private": true,
+  "description": "A personal AI assistant that runs on your Mac, talks over iMessage, and works as a second brain.",
   "type": "module",
+  "bin": {
+    "secondbrain": "dist/cli.js"
+  },
+  "files": [
+    "dist/",
+    "scripts/",
+    "context/_examples/",
+    "context/brain-pulse/",
+    "context/idea-pulse/",
+    "context/reflection/",
+    "context/content/",
+    "context/shared/security.md",
+    "context/seeds/",
+    "launchd/",
+    ".env.example"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
+    "smoke": "bash scripts/smoke-test.sh",
     "onboard": "tsx scripts/onboard.ts",
     "onboard:dry": "tsx scripts/onboard.ts --dry",
     "auth:google": "tsx scripts/google-auth.ts",

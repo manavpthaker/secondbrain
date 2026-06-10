@@ -1,10 +1,9 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import type { ToolDef } from './index.js';
+import { userContextDir } from '../paths.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const HOUSEHOLD_PATH = join(__dirname, '..', '..', 'context', 'personal', 'household.md');
+const HOUSEHOLD_PATH = join(userContextDir, 'personal', 'household.md');
 
 function ensureFile() {
   const dir = dirname(HOUSEHOLD_PATH);

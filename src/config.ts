@@ -1,6 +1,5 @@
 import { readFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { profilePath } from './paths.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Profile config — the single source of truth for who this assistant is and who
@@ -13,9 +12,7 @@ import { fileURLToPath } from 'url';
 // still typechecks and boots — `initUsers()` won't throw on a fresh clone.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..');
-const PROFILE_PATH = join(ROOT, 'config', 'profile.json');
+const PROFILE_PATH = profilePath;
 
 export type Tone = 'direct' | 'warm' | 'playful';
 export type Role = 'admin' | 'member' | 'child';

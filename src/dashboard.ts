@@ -9,7 +9,7 @@ import db, {
 import { checkActionsEnabled, spendCaps } from './lib/spend-cap.js';
 import { getBotName, getOwner } from './config.js';
 
-const DEFAULT_PORT = Number(process.env.BROWNBOT_DASH_PORT) || 4000;
+const DEFAULT_PORT = Number(process.env.SECONDBRAIN_DASH_PORT || process.env.BROWNBOT_DASH_PORT) || 4000;
 
 function escapeHtml(s: unknown): string {
   return String(s ?? '')

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Brownbot freshness sync — pulls source repos on the Mac mini every 5 min.
-# Content repos are read live by brownbot's tools (no restart needed).
+# Secondbrain freshness sync — pulls source repos on the Mac mini every 5 min.
+# Content repos are read live by secondbrain's tools (no restart needed).
 # Service repos run as launchd agents and get kickstarted on change.
 set -uo pipefail
 
 GH_DIR="$HOME/Documents/GitHub"
-LOG="$HOME/Library/Logs/brownbot-sync.log"
-DB="$GH_DIR/brownbot/brownbot.db"
+LOG="$HOME/Library/Logs/secondbrain-sync.log"
+DB="$GH_DIR/secondbrain/secondbrain.db"
 
 # Repos read live by the bot's tools (no restart needed when they change). Add
 # your own sibling repos here, or leave empty.
@@ -15,13 +15,13 @@ CONTENT_REPOS=(
 
 # Repos that run as launchd agents and get kickstarted on change.
 SERVICE_REPOS=(
-  "brownbot"
+  "secondbrain"
 )
 
 stamp() { date '+%Y-%m-%d %H:%M:%S'; }
 log() { echo "[$(stamp)] $*" >> "$LOG"; }
 
-# Stamp a sync-status key into brownbot's `memory` table (group_id='system', same
+# Stamp a sync-status key into secondbrain's `memory` table (group_id='system', same
 # convention as the daemon `*_last_tick` keys in src/lib/daemon.ts) so the doctor
 # health check — and therefore the 09:00 alive-ping DM — can flag a stuck deploy
 # instead of it only showing up as "why am I still getting nagged". Best-effort:
@@ -98,20 +98,20 @@ for r in "${SERVICE_REPOS[@]}"; do
   esac
   log "service updated: $r ($PULL_BEFORE -> $PULL_AFTER) — restarting"
   case "$r" in
-    brownbot)
-      cd "$GH_DIR/brownbot"
-      if package_files_changed "$GH_DIR/brownbot" "$PULL_BEFORE" "$PULL_AFTER"; then
-        log "  brownbot: package*.json changed, running npm install"
-        npm install --silent >> "$LOG" 2>&1 || log "  brownbot: npm install FAILED"
+    secondbrain)
+      cd "$GH_DIR/secondbrain"
+      if package_files_changed "$GH_DIR/secondbrain" "$PULL_BEFORE" "$PULL_AFTER"; then
+        log "  secondbrain: package*.json changed, running npm install"
+        npm install --silent >> "$LOG" 2>&1 || log "  secondbrain: npm install FAILED"
       fi
-      log "  brownbot: building"
-      npm run build >> "$LOG" 2>&1 || log "  brownbot: build FAILED"
-      if seed_files_changed "$GH_DIR/brownbot" "$PULL_BEFORE" "$PULL_AFTER"; then
-        log "  brownbot: fact seed changed, running npm run seed:facts"
-        npm run seed:facts >> "$LOG" 2>&1 || log "  brownbot: seed:facts FAILED"
+      log "  secondbrain: building"
+      npm run build >> "$LOG" 2>&1 || log "  secondbrain: build FAILED"
+      if seed_files_changed "$GH_DIR/secondbrain" "$PULL_BEFORE" "$PULL_AFTER"; then
+        log "  secondbrain: fact seed changed, running npm run seed:facts"
+        npm run seed:facts >> "$LOG" 2>&1 || log "  secondbrain: seed:facts FAILED"
       fi
-      launchctl kickstart -k "gui/$UID/com.brownbot.agent" >> "$LOG" 2>&1 \
-        || log "  brownbot: kickstart failed"
+      launchctl kickstart -k "gui/$UID/com.secondbrain.agent" >> "$LOG" 2>&1 \
+        || log "  secondbrain: kickstart failed"
       ;;
   esac
 done

@@ -32,7 +32,7 @@ export const taskTools: ToolDef[] = [
   {
     definition: {
       name: 'create_task',
-      description: 'Create a tracked task for a human or for brownbot. Tasks assigned to a human (owner/partner) automatically sync to Google Tasks on the iPhone. USE WHEN: user says "remind me to", "I need to", "don\'t let me forget", "follow up on", or describes any action they\'ll do later.',
+      description: 'Create a tracked task for a human or for the assistant. Tasks assigned to a human (owner/partner) automatically sync to Google Tasks on the iPhone. USE WHEN: user says "remind me to", "I need to", "don\'t let me forget", "follow up on", or describes any action they\'ll do later.',
       input_schema: {
         type: 'object' as const,
         properties: {

@@ -55,8 +55,8 @@ function cacheSet(key: string, mode: Mode): void {
   cache.set(key, { mode, expires: Date.now() + CACHE_TTL_MS });
 }
 
-const HAIKU_MODEL = parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
-const HAIKU_TIMEOUT_MS = parseNumEnv('BROWNBOT_ROUTER_TIMEOUT_MS', 1500);
+const HAIKU_MODEL = parseStrEnv('SECONDBRAIN_ROUTER_MODEL', '') || parseStrEnv('BROWNBOT_ROUTER_MODEL', 'claude-haiku-4-5');
+const HAIKU_TIMEOUT_MS = parseNumEnv('SECONDBRAIN_ROUTER_TIMEOUT_MS', 0) || parseNumEnv('BROWNBOT_ROUTER_TIMEOUT_MS', 1500);
 
 const ROUTE_SYSTEM =
   'Classify one incoming iMessage to a personal AI agent. Reply with EXACTLY one ' +

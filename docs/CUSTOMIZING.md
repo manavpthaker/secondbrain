@@ -1,7 +1,7 @@
-# Customizing brownbot
+# Customizing Second Brain
 
-Onboarding (`npm run onboard`) generates everything below. This doc is for when you
-want to hand-edit afterward, or understand what onboarding produced.
+Onboarding (`secondbrain init` or `npm run onboard`) generates everything below. This doc
+is for when you want to hand-edit afterward, or understand what onboarding produced.
 
 ## The two sources of truth
 
