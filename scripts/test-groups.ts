@@ -19,7 +19,7 @@ client.on('ready', async () => {
   for (const g of groups) {
     const jid = process.env[g.env];
     if (!jid) { console.log(`Skipping ${g.name} — no JID`); continue; }
-    await client.sendMessage(jid, `[brownbot] This is the ${g.name} group. Mapping confirmed.`);
+    await client.sendMessage(jid, `[secondbrain] This is the ${g.name} group. Mapping confirmed.`);
     console.log(`Sent to ${g.name} (${jid})`);
   }
   console.log('Done!');

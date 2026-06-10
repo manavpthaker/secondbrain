@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { runHealthCheck, formatHealthReport } from '../src/doctor.js';
 
 /**
- * Brownbot health check. Prints whether the second brain is live and whether the
+ * Second Brain health check. Prints whether the second brain is live and whether the
  * proactive loops are firing, then exits non-zero if anything needs attention
  * (so it's usable as a monitoring probe).
  *

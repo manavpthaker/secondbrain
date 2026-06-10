@@ -317,7 +317,7 @@ async function phaseContacts(profile: any) {
     if (pEmail) env.HOME_AUTO_ATTENDEE = pEmail;
   }
   const ghRoot = await ask('  Path to your local repos for the Work group (e.g. ~/Documents/GitHub), or blank: ');
-  if (ghRoot) env.BROWNBOT_GH_ROOT = ghRoot;
+  if (ghRoot) env.SECONDBRAIN_GH_ROOT = ghRoot;
   setEnv(env);
 }
 
@@ -356,7 +356,7 @@ async function phaseSeedAndVerify() {
 // ── main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  banner(`brownbot onboarding — the Mirror${DRY ? '  (DRY RUN — nothing real is written)' : ''}`);
+  banner(`Second Brain onboarding — the Mirror${DRY ? '  (DRY RUN — nothing real is written)' : ''}`);
   console.log('A short conversation, then your assistant is configured.\n');
 
   const [major] = process.versions.node.split('.').map(Number);
