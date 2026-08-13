@@ -4,7 +4,7 @@
 # Service repos run as launchd agents and get kickstarted on change.
 set -uo pipefail
 
-GH_DIR="$HOME/Documents/GitHub"
+GH_DIR="${SECONDBRAIN_GH_ROOT:-$HOME/GitHub}"
 LOG="$HOME/Library/Logs/secondbrain-sync.log"
 DB="$GH_DIR/secondbrain/secondbrain.db"
 
